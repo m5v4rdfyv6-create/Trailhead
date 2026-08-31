@@ -25,3 +25,7 @@ COLLABORATIVE BUILD DEPLOYMENT NOTE
 This ZIP is intentionally packaged with index.html at the ZIP root. Replace the existing site files with the contents of this ZIP rather than uploading the enclosing folder.
 The service worker uses a new cache (trailhead-collab-v5) and uses network-first navigation so new index.html versions are not hidden behind an old cached PWA page.
 After deployment, the Trailhead header shows “Collaborative Build” and bottom navigation includes Requests and Profile.
+
+
+CROSS-DEVICE SYNC
+When signed in, Trailhead keeps the full app state in Supabase and a local offline copy. Changes sync between web, installed phone PWA, and laptop sessions using the same Trailhead account. The app checks for remote changes while open and again when it returns to the foreground.
