@@ -16,3 +16,7 @@ This version includes:
 On iPhone: open the GitHub Pages URL in Safari, tap Share, then Add to Home Screen.
 
 Data is stored locally on that device/browser.
+
+
+PLANNER EDITION
+Adds a Planner page with Daily, Weekly, and Monthly views. All views use the same Trailhead tasks and due dates; no duplicate task system is created. Weekly and monthly progress update automatically as tasks are completed.
