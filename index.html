@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B2430">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Trailhead">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<title>Trailhead</title>
+<style>
+:root{--bg:#1B2430;--card:#2A3547;--line:#3A4558;--text:#F0EDE5;--muted:#8A93A3;--green:#7FA98F;--orange:#E8873A}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}
+body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:max(18px,env(safe-area-inset-top)) 0 max(22px,env(safe-area-inset-bottom))}
+button,input,select{font:inherit}button{cursor:pointer}.app{max-width:780px;margin:auto;padding:0 18px 32px}
+.header{display:flex;justify-content:space-between;gap:16px;margin-bottom:22px}h1,h2{font-family:Georgia,serif;margin:0}h1{font-size:34px}
+.subtitle{margin:7px 0 0;color:var(--muted);font-size:14px}.header-actions{display:flex;align-items:center;gap:12px}.streak{color:var(--orange);font-weight:700}
+.icon-btn{border:0;background:transparent;color:var(--muted);padding:7px}.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+.progress-panel{margin-bottom:26px}.row{display:flex;justify-content:space-between}.mono{font-family:ui-monospace,monospace}.tiny{font-size:11px;color:var(--muted)}
+.progress{height:12px;background:var(--bg);border-radius:999px;overflow:hidden;margin-top:10px}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--orange));transition:width .3s}
+.boot{text-align:right;margin-top:6px}.add-section{margin-bottom:26px}.add-row{display:flex;gap:8px}
+input,select{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:11px;outline:none}
+input{width:100%;padding:12px 14px}.add-btn,.primary{border:0;background:var(--orange);color:var(--bg);font-weight:800;border-radius:11px;padding:0 15px}
+.quick-panel{margin-top:10px}.quick-header{display:flex;justify-content:space-between;margin-bottom:12px}
+.edit-btn,.secondary{border:1px solid var(--line);background:var(--bg);color:var(--muted);border-radius:9px;padding:7px 10px;font-size:12px}.edit-btn.active{background:var(--green);color:var(--bg)}
+.cat-label{color:var(--green);font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin:12px 0 7px}.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:999px;padding:8px 11px;font-size:12px}.chip.editing{border-color:var(--orange);color:var(--orange)}
+.custom-row{display:grid;grid-template-columns:120px 1fr 42px;gap:7px;margin-top:13px;padding-top:13px;border-top:1px solid var(--line)}
+.column{margin-bottom:28px}.column-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}.column-head h2{font-size:21px}.count,.hint{color:var(--muted);font-size:12px}
+.task-list{display:grid;gap:10px}.task{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}.task.today{border-color:var(--orange)}.task.summit{border-color:var(--green)}
+.task-title-row{display:flex;gap:10px}.task-title{flex:1;font-size:14px;font-weight:700}.delete,.step-del{border:0;background:transparent;color:var(--muted)}
+.steps{display:grid;gap:6px;margin-top:12px}.step-row{display:flex;align-items:center;gap:8px}.check{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--muted);background:transparent;padding:0}
+.check.done{background:var(--green);border-color:var(--green)}.step-text{flex:1;font-size:12px}.step-text.done{text-decoration:line-through;color:var(--muted)}
+.step-add{display:flex;gap:7px;margin-top:11px}.step-add input{padding:8px 10px;font-size:12px}.step-add button{width:38px;border:1px solid var(--line);background:var(--line);color:var(--text);border-radius:9px}
+.task-actions{display:flex;gap:7px;margin-top:11px}.task-actions button{flex:1;border-radius:9px;padding:9px 10px;font-size:12px;font-weight:700}
+.back{background:var(--bg);border:1px solid var(--line);color:var(--muted)}.forward{background:var(--orange);border:1px solid var(--orange);color:var(--bg)}.done-btn{background:var(--green);border:1px solid var(--green);color:var(--bg)}
+.toast{position:fixed;left:50%;bottom:25px;transform:translateX(-50%);background:#111820;border:1px solid var(--line);padding:10px 14px;border-radius:999px;font-size:12px;opacity:0;transition:.2s}.toast.show{opacity:1}
+@media(max-width:560px){.app{padding:0 14px 32px}.custom-row{grid-template-columns:1fr}.task-actions{flex-direction:column}}
+</style>
+</head>
+<body>
+<main class="app">
+<header class="header"><div><h1>Trailhead</h1><p class="subtitle">Small steps. Real ground covered.</p></div><div class="header-actions"><div class="streak">🔥 <span id="streakCount">0</span></div><button id="clearBtn" class="icon-btn">🗑</button></div></header>
+<section class="panel progress-panel"><div class="row"><span class="mono tiny">PEAK <span id="peak">1</span></span><span class="mono tiny"><span id="miles">0</span> mi total</span></div><div class="progress"><span id="progressBar"></span></div><div class="boot">🥾</div></section>
+<section class="add-section">
+<div class="add-row"><input id="newTask" placeholder="What's the next trail?"><button id="addTaskBtn" class="add-btn">＋</button></div>
+<div class="panel quick-panel"><div class="quick-header"><span class="mono tiny">QUICK PICKS — tap to add</span><button id="editPicksBtn" class="edit-btn">✎ Edit</button></div><div id="quickPicks"></div>
+<div id="customPickRow" class="custom-row" hidden><select id="pickCategory"><option>Chores</option><option>Work</option><option>Self-care</option></select><input id="newPick" placeholder="Add a go-to task…"><button id="addPickBtn" class="primary">＋</button></div>
+</div></section>
+<section id="columns"></section>
+</main>
+<div id="toast" class="toast"></div>
+<script>
+(()=>{const STORAGE_KEY="trailhead-data",MILES_PER_PEAK=10;
+const DEFAULT_QUICK_TASKS={Chores:["Do the dishes","Laundry","Tidy up my space","Take out the trash","Grocery run"],Work:["Reply to emails","Clear my inbox","Plan tomorrow","Pay a bill","Book an appointment"],"Self-care":["Stretch / move my body","Drink water"]};
+const COLUMNS=[{id:"basecamp",label:"Basecamp",icon:"⛺",hint:"Ideas waiting to start"},{id:"today",label:"Today's Trail",icon:"🥾",hint:"What you're hiking now"},{id:"summit",label:"Summit",icon:"⛰",hint:"Reached the top"}];
+let state={tasks:[],streak:{count:0,lastDate:null},quickTasks:JSON.parse(JSON.stringify(DEFAULT_QUICK_TASKS)),editingPicks:false};
+const $=id=>document.getElementById(id);const uid=()=>Math.random().toString(36).slice(2)+Date.now().toString(36);
+function todayStr(){return new Date().toDateString()}function yesterdayStr(){const d=new Date();d.setDate(d.getDate()-1);return d.toDateString()}
+function load(){try{const raw=localStorage.getItem(STORAGE_KEY);if(raw){const p=JSON.parse(raw);state.tasks=p.tasks||[];state.streak=p.streak||{count:0,lastDate:null};state.quickTasks=p.quickTasks||DEFAULT_QUICK_TASKS}}catch(e){}}
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify({tasks:state.tasks,streak:state.streak,quickTasks:state.quickTasks}))}
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),1200)}
+function markActivity(){const t=todayStr();if(state.streak.lastDate===t)return;if(state.streak.lastDate===yesterdayStr())state.streak={count:state.streak.count+1,lastDate:t};else state.streak={count:1,lastDate:t}}
+function addTask(title){title=String(title||"").trim();if(!title)return;state.tasks.push({id:uid(),title,steps:[],column:"basecamp",createdAt:Date.now()});save();render();toast("Added to Basecamp")}
+function addStep(tid,text){text=String(text||"").trim();if(!text)return;const t=state.tasks.find(x=>x.id===tid);if(!t)return;t.steps.push({id:uid(),text,done:false});save();render()}
+function toggleStep(tid,sid){const t=state.tasks.find(x=>x.id===tid);const s=t?.steps.find(x=>x.id===sid);if(!s)return;const b=!s.done;s.done=!s.done;if(b)markActivity();save();render()}
+function removeStep(tid,sid){const t=state.tasks.find(x=>x.id===tid);if(!t)return;t.steps=t.steps.filter(s=>s.id!==sid);save();render()}
+function moveTask(tid,dir){const t=state.tasks.find(x=>x.id===tid);if(!t)return;const i=COLUMNS.findIndex(c=>c.id===t.column),ni=Math.min(2,Math.max(0,i+dir)),nc=COLUMNS[ni].id;if(nc==="summit"&&t.column!=="summit")markActivity();t.column=nc;save();render()}
+function removeTask(id){state.tasks=state.tasks.filter(t=>t.id!==id);save();render()}
+function renderQuick(){const w=$("quickPicks");w.innerHTML="";$("customPickRow").hidden=!state.editingPicks;$("editPicksBtn").classList.toggle("active",state.editingPicks);$("editPicksBtn").textContent=state.editingPicks?"✓ Done":"✎ Edit";
+Object.entries(state.quickTasks).forEach(([cat,labels])=>{const s=document.createElement("div");s.innerHTML='<div class="cat-label">'+cat+'</div>';const chips=document.createElement("div");chips.className="chips";labels.forEach(label=>{const b=document.createElement("button");b.className="chip"+(state.editingPicks?" editing":"");b.textContent=label+(state.editingPicks?" ×":"");b.onclick=()=>{if(state.editingPicks){state.quickTasks[cat]=state.quickTasks[cat].filter(x=>x!==label);save();renderQuick()}else addTask(label)};chips.appendChild(b)});s.appendChild(chips);w.appendChild(s)})}
+function render(){ $("streakCount").textContent=state.streak.count||0;const done=state.tasks.reduce((a,t)=>a+t.steps.filter(s=>s.done).length,0),summit=state.tasks.filter(t=>t.column==="summit").length,miles=done+summit*3,peak=Math.floor(miles/10)+1,pct=(miles%10)/10*100;$("miles").textContent=miles;$("peak").textContent=peak;$("progressBar").style.width=pct+"%";renderQuick();const root=$("columns");root.innerHTML="";
+COLUMNS.forEach((col,idx)=>{const sec=document.createElement("section");sec.className="column";const list=state.tasks.filter(t=>t.column===col.id);sec.innerHTML='<div class="column-head"><span>'+col.icon+'</span><h2>'+col.label+'</h2><span class="count">'+list.length+'</span></div>'+(list.length?'':'<p class="hint">'+col.hint+'</p>')+'<div class="task-list"></div>';const tl=sec.querySelector(".task-list");
+list.forEach(t=>{const card=document.createElement("article");card.className="task "+col.id;const doneCount=t.steps.filter(s=>s.done).length;card.innerHTML='<div class="task-title-row"><div class="task-title"></div><button class="delete">×</button></div><div class="steps"></div>'+(t.steps.length?'<div class="mono tiny">'+doneCount+'/'+t.steps.length+' stepping stones</div>':'')+'<div class="step-add"><input placeholder="'+(t.steps.length?'Another tiny step…':'Break it into one tiny step…')+'"><button>＋</button></div><div class="task-actions"></div>';card.querySelector(".task-title").textContent=t.title;card.querySelector(".delete").onclick=()=>removeTask(t.id);
+const sw=card.querySelector(".steps");t.steps.forEach(s=>{const r=document.createElement("div");r.className="step-row";r.innerHTML='<button class="check '+(s.done?'done':'')+'"></button><span class="step-text '+(s.done?'done':'')+'"></span><button class="step-del">×</button>';r.querySelector(".step-text").textContent=s.text;r.querySelector(".check").onclick=()=>toggleStep(t.id,s.id);r.querySelector(".step-del").onclick=()=>removeStep(t.id,s.id);sw.appendChild(r)});
+const inp=card.querySelector(".step-add input");card.querySelector(".step-add button").onclick=()=>addStep(t.id,inp.value);inp.onkeydown=e=>{if(e.key==="Enter")addStep(t.id,inp.value)};
+const a=card.querySelector(".task-actions");if(idx>0){const b=document.createElement("button");b.className="back";b.textContent=idx===1?"← Back to Basecamp":"↶ Reopen";b.onclick=()=>moveTask(t.id,-1);a.appendChild(b)}if(idx<2){const b=document.createElement("button");b.className=idx===1?"done-btn":"forward";b.textContent=idx===0?"Start →":"✓ Mark Done";b.onclick=()=>moveTask(t.id,1);a.appendChild(b)}tl.appendChild(card)});root.appendChild(sec)})}
+$("addTaskBtn").onclick=()=>{addTask($("newTask").value);$("newTask").value=""};$("newTask").onkeydown=e=>{if(e.key==="Enter"){$("addTaskBtn").click()}};$("editPicksBtn").onclick=()=>{state.editingPicks=!state.editingPicks;renderQuick()};$("addPickBtn").onclick=()=>{const c=$("pickCategory").value,t=$("newPick").value.trim();if(!t)return;state.quickTasks[c]=state.quickTasks[c]||[];if(!state.quickTasks[c].includes(t))state.quickTasks[c].push(t);$("newPick").value="";save();renderQuick()};$("clearBtn").onclick=()=>{if(confirm("Clear all Trailhead data?")){state.tasks=[];state.streak={count:0,lastDate:null};save();render()}};
+load();render();if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js"));
+})();
+</script>
+</body></html>
