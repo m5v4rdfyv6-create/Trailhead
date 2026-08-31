@@ -1,4 +1,4 @@
-const CACHE='trailhead-collab-v7-cross-device-sync';
+const CACHE='trailhead-collab-v8-revision-sync';
 const ASSETS=['./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png','./pine-bg.jpg','./desert-bg.jpg','./coast-bg.jpg','./alpine-bg.jpg','./autumn-bg.jpg','./night-bg.jpg'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
