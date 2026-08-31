@@ -29,3 +29,7 @@ After deployment, the Trailhead header shows “Collaborative Build” and botto
 
 CROSS-DEVICE SYNC
 When signed in, Trailhead keeps the full app state in Supabase and a local offline copy. Changes sync between web, installed phone PWA, and laptop sessions using the same Trailhead account. The app checks for remote changes while open and again when it returns to the foreground.
+
+
+COLLAPSIBLE REQUEST LISTS
+Incoming and Sent request sections can now be collapsed or expanded independently. Both start expanded.
